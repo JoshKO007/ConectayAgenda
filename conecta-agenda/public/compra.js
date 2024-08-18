@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         // Verifica la autenticación del usuario
-        const response = await fetch('http://localhost:3001/api/authenticated', {
+        const response = await fetch('http://conectayagenda.com/api/authenticated', {
             method: 'GET',
             credentials: 'include' // Incluye cookies para manejar la sesión
         });
@@ -14,15 +14,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         } else {
             console.error('Error al verificar la autenticación');
+            alert('No se pudo verificar la autenticación. Por favor, vuelve a iniciar sesión.');
         }
     } catch (error) {
         console.error('Error al verificar la autenticación:', error);
+        alert('Se produjo un error al verificar la autenticación. Por favor, vuelve a intentar.');
     }
 
     // Maneja el clic en el botón 'Probar Producto'
     document.getElementById('probar-producto').addEventListener('click', async () => {
         try {
-            const response = await fetch('http://localhost:3001/api/send-license', {
+            const response = await fetch('http://conectayagenda.com/api/send-license', {
                 method: 'POST',
                 credentials: 'include', // Incluye cookies para manejar la sesión
                 headers: {
@@ -49,10 +51,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     alert('Error al enviar la licencia');
                 });
             } else {
-                alert(result.message);
+                alert(result.message || 'Error al enviar la licencia');
             }
         } catch (error) {
             console.error('Error al enviar la licencia:', error);
+            alert('Se produjo un error al enviar la licencia. Por favor, vuelve a intentar.');
         }
     });
 });

@@ -27,14 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Envía los datos al servidor
         try {
-            const response = await fetch('http://localhost:3001/api/login', {
+            const response = await fetch('http://conectayagenda.com/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     username: data.username,
-                    password: data.password,
+                    password: hashedPasswordHex, // Enviar la contraseña cifrada
                 }),
                 credentials: 'include' // Asegúrate de incluir cookies para manejar sesiones
             });

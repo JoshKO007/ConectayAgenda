@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         // Verifica la autenticación del usuario
-        const response = await fetch('http://localhost:3001/api/authenticated', {
+        const response = await fetch('http://conectayagenda.com/api/authenticated', {
             method: 'GET',
             credentials: 'include' // Incluye cookies para manejar la sesión
         });
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Obtiene la información del usuario
     try {
-        const response = await fetch('http://localhost:3001/api/user-info', {
+        const response = await fetch('http://conectayagenda.com/api/user-info', {
             method: 'GET',
             credentials: 'include' // Incluye cookies para manejar sesiones
         });
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Función para cerrar sesión
     cerrarSesionBtn.addEventListener('click', async () => {
         try {
-            const response = await fetch('http://localhost:3001/api/logout', {
+            const response = await fetch('http://conectayagenda.com/api/logout', {
                 method: 'POST',
                 credentials: 'include' // Incluye cookies para manejar la sesión
             });
@@ -81,3 +81,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 });
+

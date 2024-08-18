@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Verificación del nombre de usuario
         try {
-            const usernameCheckResponse = await fetch('http://localhost:3001/api/check-username', {
+            const usernameCheckResponse = await fetch('http://conectayagenda.com/api/check-username', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Verificación del correo electrónico
-            const emailCheckResponse = await fetch('http://localhost:3001/api/check-email', {
+            const emailCheckResponse = await fetch('http://conectayagenda.com/api/check-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Envía los datos al servidor para el registro
-            const response = await fetch('http://localhost:3001/api/register', {
+            const response = await fetch('http://conectayagenda.com/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,3 +94,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+

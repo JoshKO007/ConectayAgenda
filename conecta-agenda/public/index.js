@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         // Verifica la autenticación del usuario
-        const response = await fetch('http://localhost:3001/api/authenticated', {
+        const response = await fetch('http://conectayagenda.com/api/authenticated', {
             method: 'GET',
             credentials: 'include' // Incluye cookies para manejar la sesión
         });
