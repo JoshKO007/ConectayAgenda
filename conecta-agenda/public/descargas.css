@@ -1,0 +1,80 @@
+/* Estilo general para la página de descargas */
+.download {
+    padding: 65px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    text-align: center; /* Asegura que el texto esté centrado */
+}
+
+/* Estilo del título de la sección de descargas */
+.download h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ffd700;
+}
+
+/* Estilo del texto descriptivo */
+.download p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+/* Contenedor de opciones de descarga */
+.download-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Espacio entre los rectángulos */
+}
+
+/* Estilo para cada opción de descarga */
+.download-option {
+    background-color: #fff;
+    color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Estilo de las imágenes en cada opción */
+.download-option img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Estilo de los botones de descarga */
+.download-btn {
+    background-color: #f1e5ac;
+    color: #333;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.download-btn:hover {
+    background-color: #ddd593;
+    color: #000;
+}
+
+/* Estilo específico para opciones de Mac */
+.mac-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Asegura que el footer y el menú se vean bien juntos */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

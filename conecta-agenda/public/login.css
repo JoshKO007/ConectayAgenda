@@ -1,0 +1,97 @@
+/* Estilo general para el formulario de registro y de inicio de sesión */
+.form-container {
+    max-width: 600px; /* Aumenta el ancho máximo del formulario */
+    margin: 0 auto;
+    padding: 40px; /* Aumenta el espaciado interno */
+    background: rgba(240, 240, 240, 0.9); /* Fondo gris claro con opacidad */
+    border-radius: 12px; /* Esquinas más redondeadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos dentro del formulario */
+}
+
+.form-container label {
+    display: block;
+    width: 100%; /* Asegura que las etiquetas ocupen el ancho completo del contenedor */
+    margin-bottom: 8px; /* Margen reducido para un espaciado más compacto */
+    color: #333; /* Color del texto de las etiquetas */
+    text-align: left; /* Alinea el texto de las etiquetas a la izquierda */
+}
+
+.form-container input {
+    width: 100%;
+    padding: 15px; /* Aumenta el relleno para los campos de entrada */
+    margin-bottom: 20px;
+    border: 1px solid #ccc; /* Color del borde */
+    border-radius: 6px; /* Esquinas redondeadas para los campos de entrada */
+    background: #fff;
+    color: #333;
+    box-sizing: border-box; /* Incluye el padding y borde en el ancho total */
+}
+
+.submit-btn {
+    background-color: #f1e5ac;
+    color: #333;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem; /* Aumenta el tamaño del texto del botón */
+}
+
+.submit-btn:hover {
+    background-color: #ddd593;
+    color: #000;
+}
+
+.register-link, .login-link {
+    display: block;
+    margin-top: 20px;
+    color: #5a532a;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.register-link:hover, .login-link:hover {
+    text-decoration: underline;
+}
+
+/* Estilos específicos para el registro */
+.register {
+    padding: 100px 20px; /* Espaciado para mantener el contenido por debajo del menú fijo */
+    background-color: rgba(0, 0, 0, 0.6);
+    border-bottom: 1px solid #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 80px); /* Ajusta el alto para llenar la pantalla, restando el espacio del menú */
+}
+
+.register h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #9e9352;
+}
+
+/* Estilos específicos para el inicio de sesión */
+.login {
+    padding: 100px 20px; /* Espaciado para mantener el contenido por debajo del menú fijo */
+    background-color: rgba(0, 0, 0, 0.6);
+    border-bottom: 1px solid #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 80px); /* Ajusta el alto para llenar la pantalla, restando el espacio del menú */
+}
+
+.login h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #f7c01b;
+}
