@@ -175,6 +175,6 @@ app.post('/api/send-license', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Servidor escuchando en el puerto ${port}`);
-});
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Servidor escuchando en http://0.0.0.0:${port}`);
+  });
