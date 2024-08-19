@@ -7,7 +7,7 @@ const cors = require('cors');
 
 // Configura Express
 const app = express();
-const port = 3001; // Cambia al puerto que estés usando
+const port = 80; // Cambia al puerto 80 para HTTP
 
 // Configura body-parser para manejar datos JSON
 app.use(bodyParser.json());
@@ -24,7 +24,7 @@ app.use(session({
     secret: 'root', // Cambia esto por un secreto real
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Asegúrate de configurar esto adecuadamente en producción (true si usas HTTPS)
+    cookie: { secure: false } // No se usa HTTPS, así que 'secure' debe ser false
 }));
 
 // Configura la conexión a la base de datos
@@ -177,4 +177,4 @@ app.post('/api/send-license', (req, res) => {
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Servidor escuchando en http://0.0.0.0:${port}`);
-  });
+});
