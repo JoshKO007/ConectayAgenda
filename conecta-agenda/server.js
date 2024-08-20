@@ -54,6 +54,12 @@ const hashMD5 = (data) => {
     return crypto.createHash('md5').update(data).digest('hex');
 };
 
+// Función para generar un ID único
+const generateID = (username, randomValue) => {
+    // Genera un ID combinando el nombre de usuario y un valor aleatorio
+    return hashSHA256(username + randomValue).slice(0, 16);
+};
+
 // Ruta para el registro
 app.post('/api/register', (req, res) => {
     const { username, email, password, confirmPassword } = req.body;
