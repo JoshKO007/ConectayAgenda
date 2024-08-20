@@ -7,7 +7,7 @@ const cors = require('cors');
 
 // Configura Express
 const app = express();
-const port = 80; // Cambia al puerto 80 para HTTP
+const port = 3000; // Cambiado a un puerto alternativo para evitar problemas de permisos
 
 // Configura body-parser para manejar datos JSON
 app.use(bodyParser.json());
@@ -52,6 +52,11 @@ const hashSHA256 = (data) => {
 // Función para cifrar en MD5
 const hashMD5 = (data) => {
     return crypto.createHash('md5').update(data).digest('hex');
+};
+
+// Función para generar un ID único (simplificado para el ejemplo)
+const generateID = (username, randomValue) => {
+    return hashSHA256(username + randomValue).slice(0, 16); // Genera un ID de 16 caracteres
 };
 
 // Ruta para el registro
@@ -102,8 +107,8 @@ app.post('/api/login', (req, res) => {
             return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
         }
 
-        // Extrae el ID y la contraseña cifrada del usuario
-        const { ID, password: hashedPasswordFromDB } = results[0];
+        // Extrae la contraseña cifrada del usuario
+        const { password: hashedPasswordFromDB } = results[0];
 
         // Cifra la contraseña ingresada por el usuario
         const hashedPasswordInput = hashSHA256(password);
