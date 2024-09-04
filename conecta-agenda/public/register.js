@@ -6,6 +6,23 @@ document.addEventListener('DOMContentLoaded', () => {
     errorMessageDiv.style.display = 'none';
     form.insertBefore(errorMessageDiv, form.firstChild);
 
+    // Prueba la conexión a la base de datos
+    const testDBConnection = async () => {
+        try {
+            const response = await fetch('https://www.conectayagenda.com/api/test-db');
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Prueba de conexión a la base de datos:', result.message);
+            } else {
+                console.error('Error al probar la conexión a la base de datos');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud de prueba de conexión:', error);
+        }
+    };
+
+    testDBConnection(); // Llama a la función para probar la conexión al cargar la página
+
     form.addEventListener('submit', async (event) => {
         event.preventDefault(); // Previene el comportamiento predeterminado del formulario
 
@@ -52,12 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'login.html'; // Redirige a la página de inicio de sesión
             } else {
                 const error = await response.json();
-                errorMessageDiv.textContent = 'Error: ' + (error.message || 'Error desconocido');
+                errorMessageDiv.textContent = 'Error: ' + error.message;
                 errorMessageDiv.style.display = 'block';
             }
         } catch (error) {
             console.error('Error:', error);
-            errorMessageDiv.textContent = 'Error al registrar el usuario. Inténtalo de nuevo más tarde.';
+            errorMessageDiv.textContent = 'Error al registrar el usuario';
             errorMessageDiv.style.display = 'block';
         }
     });

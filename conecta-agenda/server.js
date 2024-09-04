@@ -145,6 +145,16 @@ app.get('/api/user-info', (req, res) => {
     });
 });
 
+app.get('/api/test-db', (req, res) => {
+    db.query('SELECT 1 + 1 AS result', (err, results) => {
+        if (err) {
+            console.error('Error al conectar con la base de datos:', err);
+            return res.status(500).json({ message: 'Error al conectar con la base de datos' });
+        }
+        res.status(200).json({ message: 'Conexión exitosa', result: results[0].result });
+    });
+});
+
 // Ruta para enviar la licencia y registrar en la base de datos
 app.post('/api/send-license', (req, res) => {
     if (!req.session.user) {
