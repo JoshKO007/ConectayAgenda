@@ -7,7 +7,15 @@ const cors = require('cors');
 
 // Configura Express
 const app = express();
-const port = 80; // Cambia al puerto 80 para HTTP
+const port = process.env.PORT || 3000; // Cambia al puerto 3000 para desarrollo local
+
+// Redirige el tráfico HTTP a HTTPS
+app.use((req, res, next) => {
+    if (req.secure) {
+        return next();
+    }
+    res.redirect('https://' + req.headers.host + req.url);
+});
 
 // Configura body-parser para manejar datos JSON
 app.use(bodyParser.json());
