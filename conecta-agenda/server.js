@@ -11,8 +11,6 @@ const http = require('http');
 
 // Configura Express
 const app = express();
-const httpPort = 80; // Puerto para HTTP
-const httpsPort = 443; // Puerto para HTTPS
 
 // Configura body-parser para manejar datos JSON
 app.use(bodyParser.json());
@@ -29,7 +27,7 @@ app.use(session({
     secret: 'root', // Cambia esto por un secreto real
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // No se usa HTTPS en el código, así que 'secure' debe ser false
+    cookie: { secure: false } // Asegúrate de que esto esté configurado correctamente en producción
 }));
 
 // Configura la conexión a la base de datos
@@ -61,7 +59,6 @@ const hashMD5 = (data) => {
 
 // Función para generar un ID único
 const generateID = (username, randomValue) => {
-    // Genera un ID combinando el nombre de usuario y un valor aleatorio
     return hashSHA256(username + randomValue).slice(0, 16);
 };
 
@@ -101,7 +98,6 @@ app.get('/api/authenticated', (req, res) => {
 app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
 
-    // Verifica si el nombre de usuario existe y obtiene el ID del usuario
     const queryUser = 'SELECT ID, password FROM Usuarios WHERE usuario = ?';
     db.query(queryUser, [username], (err, results) => {
         if (err) {
@@ -113,15 +109,11 @@ app.post('/api/login', (req, res) => {
             return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
         }
 
-        // Extrae el ID y la contraseña cifrada del usuario
-        const { ID, password: hashedPasswordFromDB } = results[0];
-
-        // Cifra la contraseña ingresada por el usuario
+        const { password: hashedPasswordFromDB } = results[0];
         const hashedPasswordInput = hashSHA256(password);
 
-        // Compara la contraseña cifrada del usuario ingresado con la de la base de datos
         if (hashedPasswordInput === hashedPasswordFromDB) {
-            req.session.user = { username }; // Almacena la información del usuario en la sesión
+            req.session.user = { username };
             res.status(200).json({ message: 'Inicio de sesión exitoso' });
         } else {
             res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
@@ -186,7 +178,7 @@ app.post('/api/send-license', (req, res) => {
     });
 });
 
-// Redirige HTTP a HTTPS
+// Redirige HTTP a HTTPS (solo necesario si no se usa HTTPS en el entorno de Vercel)
 app.use((req, res, next) => {
     if (req.secure) {
         return next();
@@ -194,18 +186,19 @@ app.use((req, res, next) => {
     res.redirect('https://' + req.headers.host + req.url);
 });
 
-// Inicia el servidor HTTP
-http.createServer(app).listen(httpPort, () => {
-    console.log(`Servidor HTTP escuchando en http://localhost:${httpPort}`);
+// Inicia el servidor HTTP (solo necesario para pruebas locales, no en Vercel)
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
 
-// Configura y empieza el servidor HTTPS si tienes certificados (comentado aquí para Vercel)
-const privateKey = fs.readFileSync(path.join(__dirname, 'path/to/your/private.key'), 'utf8');
-const certificate = fs.readFileSync(path.join(__dirname, 'path/to/your/certificate.crt'), 'utf8');
-const ca = fs.readFileSync(path.join(__dirname, 'path/to/your/ca_bundle.crt'), 'utf8');
+// Configuración HTTPS (comentada aquí ya que Vercel maneja HTTPS automáticamente)
+// const privateKey = fs.readFileSync(path.join(__dirname, 'path/to/your/private.key'), 'utf8');
+// const certificate = fs.readFileSync(path.join(__dirname, 'path/to/your/certificate.crt'), 'utf8');
+// const ca = fs.readFileSync(path.join(__dirname, 'path/to/your/ca_bundle.crt'), 'utf8');
 
-const credentials = { key: privateKey, cert: certificate, ca: ca };
+// const credentials = { key: privateKey, cert: certificate, ca: ca };
 
-https.createServer(credentials, app).listen(httpsPort, () => {
-    console.log(`Servidor HTTPS escuchando en https://localhost:${httpsPort}`);
-});
+// https.createServer(credentials, app).listen(httpsPort, () => {
+//     console.log(`Servidor HTTPS escuchando en https://localhost:${httpsPort}`);
+// });
