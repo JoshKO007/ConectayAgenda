@@ -4,18 +4,15 @@ const crypto = require('crypto');
 const mysql = require('mysql2');
 const session = require('express-session');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+const https = require('https');
+const http = require('http');
 
 // Configura Express
 const app = express();
-const port = process.env.PORT || 3000; // Cambia al puerto 3000 para desarrollo local
-
-// Redirige el tráfico HTTP a HTTPS
-app.use((req, res, next) => {
-    if (req.secure) {
-        return next();
-    }
-    res.redirect('https://' + req.headers.host + req.url);
-});
+const httpPort = 80; // Puerto para HTTP
+const httpsPort = 443; // Puerto para HTTPS
 
 // Configura body-parser para manejar datos JSON
 app.use(bodyParser.json());
@@ -32,7 +29,7 @@ app.use(session({
     secret: 'root', // Cambia esto por un secreto real
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // No se usa HTTPS, así que 'secure' debe ser false
+    cookie: { secure: false } // No se usa HTTPS en el código, así que 'secure' debe ser false
 }));
 
 // Configura la conexión a la base de datos
@@ -189,6 +186,26 @@ app.post('/api/send-license', (req, res) => {
     });
 });
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Servidor escuchando en http://0.0.0.0:${port}`);
+// Redirige HTTP a HTTPS
+app.use((req, res, next) => {
+    if (req.secure) {
+        return next();
+    }
+    res.redirect('https://' + req.headers.host + req.url);
+});
+
+// Inicia el servidor HTTP
+http.createServer(app).listen(httpPort, () => {
+    console.log(`Servidor HTTP escuchando en http://localhost:${httpPort}`);
+});
+
+// Configura y empieza el servidor HTTPS si tienes certificados (comentado aquí para Vercel)
+const privateKey = fs.readFileSync(path.join(__dirname, 'path/to/your/private.key'), 'utf8');
+const certificate = fs.readFileSync(path.join(__dirname, 'path/to/your/certificate.crt'), 'utf8');
+const ca = fs.readFileSync(path.join(__dirname, 'path/to/your/ca_bundle.crt'), 'utf8');
+
+const credentials = { key: privateKey, cert: certificate, ca: ca };
+
+https.createServer(credentials, app).listen(httpsPort, () => {
+    console.log(`Servidor HTTPS escuchando en https://localhost:${httpsPort}`);
 });
