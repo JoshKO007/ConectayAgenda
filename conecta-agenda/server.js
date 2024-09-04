@@ -20,7 +20,7 @@ app.use(express.static('public')); // Sirve archivos estáticos desde la carpeta
 
 // Configura CORS para permitir solicitudes desde el frontend
 app.use(cors({
-    origin: 'http://conectayagenda.com',
+    origin: 'https://www.conectayagenda.com',
     credentials: true
 }));
 
