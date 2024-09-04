@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
                 console.log('Prueba de conexión a la base de datos:', result.message);
             } else {
-                console.error('Error al probar la conexión a la base de datos');
+                console.error('Error al probar la conexión a la base de datos. Código de estado:', response.status);
+                const errorText = await response.text();
+                console.error('Texto de error:', errorText);
             }
         } catch (error) {
             console.error('Error en la solicitud de prueba de conexión:', error);
@@ -68,8 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 form.reset(); // Limpia el formulario después de un registro exitoso
                 window.location.href = 'login.html'; // Redirige a la página de inicio de sesión
             } else {
-                const error = await response.json();
-                errorMessageDiv.textContent = 'Error: ' + error.message;
+                const errorText = await response.text(); // Lee el texto de la respuesta si no es JSON
+                try {
+                    const error = JSON.parse(errorText);
+                    errorMessageDiv.textContent = 'Error: ' + error.message;
+                } catch (jsonError) {
+                    errorMessageDiv.textContent = 'Error desconocido: ' + errorText;
+                }
                 errorMessageDiv.style.display = 'block';
             }
         } catch (error) {
