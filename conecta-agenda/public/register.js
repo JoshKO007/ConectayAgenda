@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Validaciones
         if (!/^[a-zA-Z0-9]+$/.test(data.username)) {
-            errorMessageDiv.textContent = 'El nombre de usuario solo puede contener letras y números.';
+            errorMessageDiv.textContent = 'El nombre de usuario s.';
             errorMessageDiv.style.display = 'block';
             return;
         }
