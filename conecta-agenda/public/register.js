@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Envía los datos al servidor para el registro
         try {
-            const response = await fetch('http://conectayagenda.com/api/register', {
+            const response = await fetch('https://conectayagenda.com/api/register', { // Cambiado a HTTPS
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
