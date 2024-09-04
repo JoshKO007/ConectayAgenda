@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Envía los datos al servidor para el registro
         try {
-            const response = await fetch('https://www.conectayagenda.com/api/register', { // Cambiado a HTTPS
+            const response = await fetch('https://www.conectayagenda.com/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     username: data.username,
                     email: data.email,
                     password: data.password,
-                    confirmPassword: data['confirm-password'], // Asegúrate de incluir confirmPassword en el cuerpo de la solicitud
+                    confirmPassword: data['confirm-password'] // Asegúrate de incluir confirmPassword en el cuerpo de la solicitud
                 }),
             });
 
