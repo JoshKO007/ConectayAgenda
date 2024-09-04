@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'login.html'; // Redirige a la página de inicio de sesión
             } else {
                 const error = await response.json();
-                errorMessageDiv.textContent = 'Error: ' + error.message;
+                errorMessageDiv.textContent = 'Error: ' + (error.message || 'Error desconocido');
                 errorMessageDiv.style.display = 'block';
             }
         } catch (error) {
             console.error('Error:', error);
-            errorMessageDiv.textContent = 'Error al registrar el usuario';
+            errorMessageDiv.textContent = 'Error al registrar el usuario. Inténtalo de nuevo más tarde.';
             errorMessageDiv.style.display = 'block';
         }
     });
