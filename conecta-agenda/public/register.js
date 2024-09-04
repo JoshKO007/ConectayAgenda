@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     username: data.username,
                     email: data.email,
                     password: data.password,
-                    confirmPassword: data['confirm-password'] // Asegúrate de incluir confirmPassword en el cuerpo de la solicitud
+                    confirmPassword: data['confirm-password']
                 }),
             });
 
@@ -52,12 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'login.html'; // Redirige a la página de inicio de sesión
             } else {
                 const error = await response.json();
+                console.error('Error en el servidor:', error);
                 errorMessageDiv.textContent = 'Error: ' + error.message;
                 errorMessageDiv.style.display = 'block';
             }
         } catch (error) {
-            console.error('Error:', error);
-            errorMessageDiv.textContent = 'Error al registrar el usuario';
+            console.error('Error de red:', error);
+            errorMessageDiv.textContent = 'Error al registrar el usuario. Verifica la consola para más detalles.';
             errorMessageDiv.style.display = 'block';
         }
     });
