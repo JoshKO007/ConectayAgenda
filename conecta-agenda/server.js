@@ -10,22 +10,20 @@ const app = express();
 
 // Configura body-parser para manejar datos JSON
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('public')); // Sirve archivos estáticos desde la carpeta 'public'
 
-// Configura CORS
-app.use(
-  cors({
+// Configura CORS para permitir solicitudes desde el frontend
+app.use(cors({
     origin: 'https://www.conectayagenda.com',
-    credentials: true,
-  })
-);
+    credentials: true
+}));
 
 // Configura la sesión
 app.use(session({
-    secret: 'root',
+    secret: 'root', // Cambia esto por un secreto real
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: { secure: false } // Asegúrate de que esto esté configurado correctamente en producción
 }));
 
 // Configura la conexión a la base de datos
@@ -36,7 +34,7 @@ const db = mysql.createConnection({
     database: process.env.DB_NAME,
     port: process.env.DB_PORT || 3306,
     ssl: {
-        rejectUnauthorized: false
+        rejectUnauthorized: false // Cambia según tus necesidades
     }
 });
 
@@ -49,14 +47,25 @@ db.connect(err => {
     console.log('Conectado a la base de datos MySQL');
 });
 
-// Funciones para hashing
-const hashSHA256 = data => crypto.createHash('sha256').update(data).digest('hex');
-const hashMD5 = data => crypto.createHash('md5').update(data).digest('hex');
-const generateID = (username, randomValue) => hashSHA256(username + randomValue).slice(0, 16);
+// Función para cifrar en SHA-256
+const hashSHA256 = (data) => {
+    return crypto.createHash('sha256').update(data).digest('hex');
+};
 
-// Rutas
+// Función para cifrar en MD5
+const hashMD5 = (data) => {
+    return crypto.createHash('md5').update(data).digest('hex');
+};
+
+// Función para generar un ID único
+const generateID = (username, randomValue) => {
+    return hashSHA256(username + randomValue).slice(0, 16);
+};
+
+// Ruta para el registro
 app.post('/api/register', (req, res) => {
     const { username, email, password, confirmPassword } = req.body;
+
     if (password !== confirmPassword) {
         return res.status(400).json({ message: 'Las contraseñas no coinciden' });
     }
@@ -65,15 +74,18 @@ app.post('/api/register', (req, res) => {
     const id = generateID(username, randomValue);
     const hashedPassword = hashSHA256(password);
 
-    db.query('INSERT INTO Usuarios (ID, usuario, correo, password) VALUES (?, ?, ?, ?)', [id, username, email, hashedPassword], (err, results) => {
+    const query = 'INSERT INTO Usuarios (ID, usuario, correo, password) VALUES (?, ?, ?, ?)';
+    db.query(query, [id, username, email, hashedPassword], (err, results) => {
         if (err) {
             console.error('Error al insertar en la base de datos:', err);
             return res.status(500).json({ message: 'Error al registrar el usuario' });
         }
+
         res.status(201).json({ message: 'Usuario registrado exitosamente' });
     });
 });
 
+// Ruta para verificar si el usuario está autenticado
 app.get('/api/authenticated', (req, res) => {
     if (req.session.user) {
         res.status(200).json({ authenticated: true, username: req.session.user.username });
@@ -82,13 +94,17 @@ app.get('/api/authenticated', (req, res) => {
     }
 });
 
+// Ruta para el inicio de sesión
 app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
-    db.query('SELECT ID, password FROM Usuarios WHERE usuario = ?', [username], (err, results) => {
+
+    const queryUser = 'SELECT ID, password FROM Usuarios WHERE usuario = ?';
+    db.query(queryUser, [username], (err, results) => {
         if (err) {
             console.error('Error en la consulta:', err);
             return res.status(500).json({ message: 'Error en el servidor' });
         }
+
         if (results.length === 0) {
             return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
         }
@@ -105,24 +121,31 @@ app.post('/api/login', (req, res) => {
     });
 });
 
+// Ruta para obtener la información del usuario
 app.get('/api/user-info', (req, res) => {
     if (!req.session.user) {
         return res.status(401).json({ message: 'No autenticado' });
     }
+
     const { username } = req.session.user;
-    db.query('SELECT usuario, correo FROM Usuarios WHERE usuario = ?', [username], (err, results) => {
+
+    const query = 'SELECT usuario, correo FROM Usuarios WHERE usuario = ?';
+    db.query(query, [username], (err, results) => {
         if (err) {
             console.error('Error en la consulta:', err);
             return res.status(500).json({ message: 'Error al obtener la información del usuario' });
         }
+
         if (results.length === 0) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
+
         const { usuario, correo } = results[0];
         res.status(200).json({ username: usuario, email: correo });
     });
 });
 
+// Prueba de conexión a la base de datos
 app.get('/api/test-db', (req, res) => {
     db.query('SELECT 1 + 1 AS result', (err, results) => {
         if (err) {
@@ -133,17 +156,20 @@ app.get('/api/test-db', (req, res) => {
     });
 });
 
+// Ruta para enviar la licencia y registrar en la base de datos
 app.post('/api/send-license', (req, res) => {
     if (!req.session.user) {
         return res.status(401).json({ message: 'No autenticado' });
     }
 
     const username = req.session.user.username;
+
     db.query('SELECT usuario, correo FROM Usuarios WHERE usuario = ?', [username], (err, results) => {
         if (err) {
             console.error('Error en la consulta:', err);
             return res.status(500).json({ message: 'Error al obtener la información del usuario' });
         }
+
         if (results.length === 0) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
@@ -151,17 +177,19 @@ app.post('/api/send-license', (req, res) => {
         const { usuario, correo } = results[0];
         const license = hashMD5(`${username}:${correo}`).slice(0, 10);
 
-        db.query('INSERT INTO licencias (usuario_id, licencia) VALUES ((SELECT ID FROM Usuarios WHERE usuario = ?), ?)', [username, license], (err, results) => {
+        const queryInsertLicense = 'INSERT INTO licencias (usuario_id, licencia) VALUES ((SELECT ID FROM Usuarios WHERE usuario = ?), ?)';
+        db.query(queryInsertLicense, [username, license], (err, results) => {
             if (err) {
                 console.error('Error al insertar licencia en la base de datos:', err);
                 return res.status(500).json({ message: 'Error al registrar la licencia' });
             }
+
             res.status(200).json({ message: 'Licencia generada', license, username, email: correo });
         });
     });
 });
 
-// Redirige HTTP a HTTPS
+// Redirige HTTP a HTTPS (solo necesario si no se usa HTTPS en el entorno de Vercel)
 app.use((req, res, next) => {
     if (req.secure) {
         return next();
@@ -169,6 +197,7 @@ app.use((req, res, next) => {
     res.redirect('https://' + req.headers.host + req.url);
 });
 
+// Inicia el servidor HTTP (solo necesario para pruebas locales, no en Vercel)
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
