@@ -32,10 +32,11 @@ app.use(session({
 
 // Configura la conexión a la base de datos
 const db = mysql.createConnection({
-    host: '34.132.192.215',
-    user: 'Josh',
-    password: 'root',
-    database: 'servicios'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+
 });
 
 // Conecta a la base de datos
