@@ -13,6 +13,7 @@ app.use(express.static('public')); // Sirve archivos estáticos desde la carpeta
 // Configura CORS para permitir solicitudes desde el frontend
 app.use(cors({
     origin: 'https://www.conectayagenda.com', // Tu dominio HTTPS
+    methods: ['GET', 'POST'], // Asegúrate de que el método POST está permitido
     credentials: true
 }));
 
@@ -21,7 +22,7 @@ app.use(session({
     secret: 'root', // Cambia esto por un secreto real
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Asegúrate de que esto esté configurado correctamente en producción
+    cookie: { secure: true } // Asegúrate de que esté configurado correctamente en producción
 }));
 
 // Configura el transporte de Nodemailer con variables de entorno
@@ -38,7 +39,7 @@ app.post('/send-email', (req, res) => {
     const { email, subject, message } = req.body;
 
     const mailOptions = {
-        from: process.env.EMAIL_USER, // Usa la variable de entorno para la dirección de correo electrónico
+        from: process.env.EMAIL_USER, // Dirección de correo electrónico del remitente
         to: email, // Dirección de correo del destinatario
         subject: subject, // Asunto del correo
         text: message // Cuerpo del correo
@@ -54,8 +55,8 @@ app.post('/send-email', (req, res) => {
     });
 });
 
-// Inicia el servidor HTTP (solo necesario para pruebas locales, no en Vercel)
+// Inicia el servidor en el puerto proporcionado por Vercel
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+    console.log(`Servidor escuchando en puerto ${PORT}`);
 });
