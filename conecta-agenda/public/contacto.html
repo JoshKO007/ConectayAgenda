@@ -12,38 +12,45 @@
     <div class="menu">
         <img src="imagenes/logo.png" alt="Logo" class="logo">
         <div class="nav-links">
-            <a href="index.html">Inicio</a>
+            <a href="#inicio">Inicio</a>
             <a href="descargas.html">Descargas</a>
-            <a href="contacto.html">Contacto</a>
+            <a href="#contact">Contacto</a>
         </div>
     </div>
 
-    <!-- Contenedor de contacto -->
-    <div class="contact-container">
+    <!-- Sección de contacto -->
+    <section class="contact">
         <h2>Contacto</h2>
-        <form action="#" method="post" class="contact-form">
-            <input type="email" name="email" placeholder="Correo Electrónico" required>
-            <input type="text" name="subject" placeholder="Asunto" required>
-            <textarea name="message" placeholder="Escribe tu mensaje aquí..." rows="5" required></textarea>
-            <button type="submit">Enviar</button>
+        <form id="contact-form">
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="subject">Asunto:</label>
+            <input type="text" id="subject" name="subject" required>
+
+            <label for="message">Mensaje:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Enviar Correo</button>
         </form>
         <div class="social-media">
-            <a href="https://www.facebook.com" target="_blank">
-                <img src="imagenes/facebook.png" alt="Facebook" class="social-icon">
+            <a href="https://facebook.com" target="_blank">
+                <img src="imagenes/facebook.png" alt="Facebook">
             </a>
-            <a href="https://www.instagram.com" target="_blank">
-                <img src="imagenes/instagram.png" alt="Instagram" class="social-icon">
+            <a href="https://instagram.com" target="_blank">
+                <img src="imagenes/instagram.png" alt="Instagram">
             </a>
-            <a href="https://twitter.com" target="_blank">
-                <img src="imagenes/twitter.png" alt="Twitter" class="social-icon">
+            <a href="https://x.com" target="_blank">
+                <img src="imagenes/x.png" alt="X">
             </a>
         </div>
-    </div>
-    
+    </section>
+
+    <!-- Pie de página -->
     <footer>
         <p>&copy; 2024 Conecta y Agenda. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="concatcto.js"></script>
+    <script src="contacto.js"></script>
 </body>
 </html>
