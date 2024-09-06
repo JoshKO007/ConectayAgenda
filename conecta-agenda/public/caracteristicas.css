@@ -1,0 +1,37 @@
+/* Estilo específico para la página de características */
+.features {
+    padding: 70px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    text-align: center;
+}
+
+.features h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ffd700;
+}
+
+.features p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+.feature-item {
+    margin-bottom: 30px;
+}
+
+.feature-item img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.feature-item h2 {
+    font-size: 1.8rem;
+    margin: 10px 0;
+}
+
+.feature-item p {
+    font-size: 1rem;
+}

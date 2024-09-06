@@ -1,0 +1,56 @@
+/* Estilo específico para la página de notas de versión */
+.release-notes {
+    padding: 60px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    text-align: center;
+}
+
+.release-notes h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ffd700;
+}
+
+.release-notes p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+.version-box {
+    background-color: #fff;
+    color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.version-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.version-box p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.version-box ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.version-box ul li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Estilo para la nueva versión */
+.new-version {
+    border-left: 5px solid #ffd700; /* Borde amarillo dorado para resaltar la nueva versión */
+}

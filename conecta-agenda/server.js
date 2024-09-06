@@ -25,35 +25,6 @@ app.use(session({
     cookie: { secure: true } // Asegúrate de que esté configurado correctamente en producción
 }));
 
-// Configura el transporte de Nodemailer con variables de entorno
-const transporter = nodemailer.createTransport({
-    service: 'gmail', // Usa tu servicio de correo (puede ser 'gmail', 'hotmail', etc.)
-    auth: {
-        user: process.env.EMAIL_USER, // Usa la variable de entorno para la dirección de correo electrónico
-        pass: process.env.EMAIL_PASS // Usa la variable de entorno para la contraseña o token de aplicación
-    }
-});
-
-// Configura una ruta para manejar el envío de correos electrónicos
-app.post('/send-email', (req, res) => {
-    const { email, subject, message } = req.body;
-
-    const mailOptions = {
-        from: process.env.EMAIL_USER, // Dirección de correo electrónico del remitente
-        to: email, // Dirección de correo del destinatario
-        subject: subject, // Asunto del correo
-        text: message // Cuerpo del correo
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log('Error al enviar el correo:', error);
-            return res.status(500).send('Error al enviar el correo');
-        }
-        console.log('Correo enviado:', info.response);
-        res.status(200).send('Correo enviado');
-    });
-});
 
 // Inicia el servidor en el puerto proporcionado por Vercel
 const PORT = process.env.PORT || 3000;
