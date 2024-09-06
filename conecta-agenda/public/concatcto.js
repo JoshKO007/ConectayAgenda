@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const message = document.getElementById('message').value;
 
         try {
-            const response = await fetch('https://www.conectayagenda.com/send-email', {
+            const response = await fetch('/send-email', { // Asegúrate de que la URL sea correcta
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
