@@ -3,11 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
 const nodemailer = require('nodemailer'); // Importa nodemailer
-const path = require('path');
-const https = require('https');
-const http = require('http');
 
-// Configura Express
 const app = express();
 
 // Configura body-parser para manejar datos JSON
@@ -16,7 +12,7 @@ app.use(express.static('public')); // Sirve archivos estáticos desde la carpeta
 
 // Configura CORS para permitir solicitudes desde el frontend
 app.use(cors({
-    origin: 'https://www.conectayagenda.com',
+    origin: 'https://www.conectayagenda.com', // Tu dominio HTTPS
     credentials: true
 }));
 
@@ -27,14 +23,6 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false } // Asegúrate de que esto esté configurado correctamente en producción
 }));
-
-// Redirige HTTP a HTTPS (solo necesario si no se usa HTTPS en el entorno de Vercel)
-app.use((req, res, next) => {
-    if (req.secure) {
-        return next();
-    }
-    res.redirect('https://' + req.headers.host + req.url);
-});
 
 // Configura el transporte de Nodemailer con variables de entorno
 const transporter = nodemailer.createTransport({
