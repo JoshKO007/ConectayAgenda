@@ -1,0 +1,136 @@
+/* Estilo general */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilo del menú */
+.menu {
+    background-color: rgba(108, 95, 152, 0.9);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 90%;
+    max-width: 1500px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    z-index: 1000;
+}
+
+.menu .logo {
+    height: 50px;
+}
+
+.menu .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    color: #f1e5ac;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu a:hover {
+    background-color: #ddd593;
+    color: #333;
+    border-radius: 5px;
+}
+
+/* Estilo del contenedor de contacto */
+.contact-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    margin-top: 120px; /* Ajuste para que no quede oculto tras el menú fijo */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-container h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch; /* Asegura que los elementos del formulario ocupen todo el ancho del contenedor */
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 100%; /* Asegura que ocupen todo el ancho disponible */
+    box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho */
+}
+
+.contact-form textarea {
+    resize: vertical; /* Permite cambiar el tamaño verticalmente, manteniendo la alineación */
+}
+
+.contact-form button {
+    background-color: #6c5f98;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.contact-form button:hover {
+    background-color: #574b84;
+}
+
+.social-media {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+
+
+/* Estilo del pie de página */
+footer {
+    padding: 20px;
+    background-color: rgba(41, 40, 40, 0.8); /* Color de fondo para el pie de página */
+    color: #fff; /* Color del texto */
+    text-align: center;
+    width: 100%; /* Asegura que el footer cubra todo el ancho de la página */
+    box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
+    position: fixed; /* Asegura que el footer se coloque al final del contenido */
+    bottom: 0;
+}
