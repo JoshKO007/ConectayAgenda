@@ -1,35 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('contact-form');
+    const form = document.querySelector('#contact-form');
+    const responseMessage = document.querySelector('#response-message');
 
-    if (form) {
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Evita el envío por defecto del formulario
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
 
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
+        const formData = new FormData(form);
+        const data = {
+            email: formData.get('email'),
+            subject: formData.get('subject'),
+            message: formData.get('message')
+        };
 
-            try {
-                const response = await fetch('/send-email', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, subject, message })
-                });
+        try {
+            const response = await fetch('/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
-                if (response.ok) {
-                    alert('Correo enviado con éxito');
-                    form.reset(); // Limpia el formulario
-                } else {
-                    alert('Error al enviar el correo');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al enviar el correo');
+            if (response.ok) {
+                responseMessage.textContent = 'Correo enviado con éxito!';
+                responseMessage.style.color = 'green';
+                form.reset(); // Limpiar el formulario
+            } else {
+                responseMessage.textContent = 'Error al enviar el correo. Por favor, inténtalo de nuevo.';
+                responseMessage.style.color = 'red';
             }
-        });
-    } else {
-        console.error('Formulario no encontrado');
-    }
+        } catch (error) {
+            responseMessage.textContent = 'Error al enviar el correo. Por favor, inténtalo de nuevo.';
+            responseMessage.style.color = 'red';
+        }
+    });
 });
